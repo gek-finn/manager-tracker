@@ -1,0 +1,11 @@
+[Unit]
+Description=Daily Manager Tracker backup
+
+[Timer]
+OnCalendar=*-*-* 03:15:00 Europe/Kaliningrad
+Persistent=true
+RandomizedDelaySec=300
+Unit=manager-tracker-backup.service
+
+[Install]
+WantedBy=timers.target

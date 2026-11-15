@@ -1,0 +1,2 @@
+-r requirements.txt
+Gunicorn==27.0.1; platform_system != "Windows"

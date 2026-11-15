@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block title %}Менеджеры{% endblock %}{% block crumb %}Менеджеры{% endblock %}
+{% block content %}
+<div class="heading"><div><p class="eyebrow">СПРАВОЧНИК</p><h1>Менеджеры <span class="count">{{ managers|length }}</span></h1><p class="muted">Отключение сохраняет назначения. Переименование отражается во всех связанных заявках.</p></div><a class="button" href="{{ url_for('manager_form') }}">＋ Добавить менеджера</a></div>
+<p class="muted">Старые варианты имён перенесены отдельно, без объединения. Номер помогает различать похожие имена. Удаление менеджеров не предусмотрено.</p>
+<section class="panel">{% if managers %}<div class="table-wrap"><table><thead><tr><th>Номер</th><th>Имя</th><th>Состояние</th><th>Заявки</th><th>Действия</th></tr></thead><tbody>
+{% for manager in managers %}<tr><td>№{{ manager.id }}</td><td class="manager-name">{{ manager.name }}</td><td><span class="badge {{ 'deadline-on_time' if manager.active else 'deadline-missing' }}">{{ 'Активен' if manager.active else 'Неактивен' }}</span></td><td>{{ manager.ticket_count }}</td><td><div class="manager-actions"><a href="{{ url_for('manager_form', manager_id=manager.id) }}">Переименовать</a><form method="post" action="{{ url_for('manager_activity', manager_id=manager.id) }}"><input type="hidden" name="csrf_token" value="{{ session.csrf_token }}"><input type="hidden" name="active" value="{{ '0' if manager.active else '1' }}"><button type="submit" class="button secondary">{{ 'Отключить' if manager.active else 'Включить' }}</button></form></div></td></tr>{% endfor %}
+</tbody></table></div>{% else %}<div class="empty"><h2>Менеджеров пока нет</h2><p class="muted">Добавьте менеджера, чтобы назначать ему заявки. Назначение остаётся необязательным.</p></div>{% endif %}</section>
+{% endblock %}

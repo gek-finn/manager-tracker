@@ -1,0 +1,7 @@
+<!doctype html>
+<html lang="ru">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>{% block title %}Заявки{% endblock %} · Manager Tracker</title><link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"><script defer src="{{ url_for('static', filename='app.js') }}"></script></head>
+<body><header><div class="brand"><span class="logo">М</span><div>Manager Tracker<small>Контроль клиентских заявок</small></div></div><span class="local">● Локальное приложение</span></header>
+<main>{% if session.get('owner_authenticated') %}<nav><a href="{{ url_for('summaries') }}">Ежедневные сводки</a><span>·</span><a href="{{ url_for('dashboard') }}">Панель руководителя</a><span>·</span><a href="{{ url_for('automation_settings') }}">Настройки задач</a><span>·</span><a href="{{ url_for('managers') }}">Менеджеры</a><span>·</span><a href="{{ url_for('index') }}">Заявки</a><span>/</span><span>{% block crumb %}Все заявки{% endblock %}</span></nav><form method="post" action="{{ url_for('logout') }}" class="logout-form"><input type="hidden" name="csrf_token" value="{{ session.csrf_token }}"><button class="button secondary" type="submit">Выйти</button></form>{% endif %}
+{% for category, message in get_flashed_messages(with_categories=true) %}<div class="notice" role="status">{{ message }}</div>{% endfor %}
+{% block content %}{% endblock %}</main><footer>Manager Tracker · Этап 6А <span>Данные хранятся на этом компьютере</span></footer></body></html>

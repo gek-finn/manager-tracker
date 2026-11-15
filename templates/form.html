@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %}{{ 'Редактирование' if ticket else 'Новая заявка' }}{% endblock %}
+{% block crumb %}{{ 'Редактирование заявки #' ~ ticket.id if ticket else 'Новая заявка' }}{% endblock %}
+{% block content %}<div class="heading"><div><h1>{{ 'Редактирование заявки #' ~ ticket.id if ticket else 'Новая заявка' }}</h1><p class="muted">Поля со звёздочкой обязательны для заполнения.</p></div></div>
+{% if errors %}<div class="error-box" role="alert"><strong>Не удалось сохранить заявку</strong><ul>{% for error in errors.values() %}<li>{{ error }}</li>{% endfor %}</ul></div>{% endif %}
+<form method="post" class="panel form-panel" data-save-form><input type="hidden" name="csrf_token" value="{{ session.csrf_token }}"><input type="hidden" name="submission_key" value="{{ submission_key }}">
+<h2>Информация о клиенте</h2><div class="grid">
+<label>Клиент / компания *<input name="client" required maxlength="200" value="{{ values.get('client', '') }}" autocomplete="organization" placeholder="Имя клиента или название компании"></label>
+<label>Контакт клиента<input name="contact" maxlength="250" value="{{ values.get('contact', '') }}" placeholder="Телефон или email"></label>
+<label class="wide">Описание потребности *<textarea name="description" required maxlength="10000" rows="5" placeholder="Что нужно клиенту?">{{ values.get('description', '') }}</textarea></label></div>
+<h2 class="section-title">Обработка заявки</h2><div class="grid"><label for="ticket-manager">Ответственный менеджер<select id="ticket-manager" name="manager_id"><option value="" {% if not values.get('manager_id') %}selected{% endif %}>Не назначен</option>{% for value, label in manager_options %}<option value="{{ value }}" {% if values.get('manager_id')|string == value %}selected{% endif %}>{{ label }}</option>{% endfor %}</select><small><a href="{{ url_for('managers') }}">Справочник менеджеров</a></small></label>
+<label>Статус *<select name="status" required>{% for item in form_statuses %}<option {% if values.get('status') == item %}selected{% endif %}>{{ item }}</option>{% endfor %}</select></label>
+<label>Приоритет<select name="priority">{% for item in priorities %}<option {% if values.get('priority') == item %}selected{% endif %}>{{ item }}</option>{% endfor %}</select></label>
+<p class="muted wide">Сроками управляют задачи в карточке заявки. Смена ответственного не переназначает существующие задачи, кроме открытой незакреплённой автоматической первичной обработки: при назначении активного менеджера заявки она получит его. При закрытии заявки все её открытые задачи будут отменены с причиной «Заявка закрыта».</p></div>
+<p class="muted">При создании незакрытой заявки автоматически появится задача первой обработки. Нужно проверить обращение, связаться с клиентом, записать результат и определить следующий шаг. Это не срок завершения продажи. Отправку КП отмечайте специальным действием в карточке.</p><div class="form-actions"><button type="submit" class="button">Сохранить</button><a class="button secondary" href="{{ url_for('detail', ticket_id=ticket.id) if ticket else url_for('index') }}">Отмена</a></div></form>{% endblock %}

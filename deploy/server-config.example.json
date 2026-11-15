@@ -1,0 +1,9 @@
+{
+  "APP_MODE": "production",
+  "SECRET_KEY": "",
+  "OWNER_LOGIN": "",
+  "OWNER_PASSWORD_HASH": "",
+  "DATABASE": "/var/lib/manager-tracker/tracker.sqlite3",
+  "TRUSTED_HOSTS": ["manager.gilinsky.ru"],
+  "TRUST_LOCAL_PROXY": true
+}

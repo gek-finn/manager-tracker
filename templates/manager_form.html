@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+{% block title %}{{ 'Переименование менеджера' if manager else 'Новый менеджер' }}{% endblock %}
+{% block crumb %}{{ 'Менеджер №' ~ manager.id if manager else 'Новый менеджер' }}{% endblock %}
+{% block content %}<div class="heading"><div><h1>{{ 'Переименование менеджера №' ~ manager.id if manager else 'Новый менеджер' }}</h1><p class="muted">Имя обязательно, до 100 символов. Новые имена должны быть уникальными без учёта регистра и крайних пробелов.</p></div></div>
+{% if error %}<div class="error-box" role="alert">{{ error }}</div>{% endif %}
+<form method="post" class="panel form-panel" data-save-form><input type="hidden" name="csrf_token" value="{{ session.csrf_token }}"><label for="manager-name">Имя менеджера *<input id="manager-name" name="name" value="{{ name }}" required {% if not manager or manager.name|length <= 100 %}maxlength="100"{% endif %}></label>
+{% if manager %}<p class="muted">Импортированное имя можно сохранить без изменений, даже если оно отличается от новых правил. Связь с заявками хранится по номеру менеджера и при переименовании не теряется.</p>{% endif %}
+<div class="form-actions"><button class="button" type="submit">Сохранить</button><a class="button secondary" href="{{ url_for('managers') }}">Отмена</a></div></form>{% endblock %}

@@ -1,0 +1,17 @@
+[Unit]
+Description=Manager Tracker consistent daily SQLite backup
+
+[Service]
+Type=oneshot
+User=manager-tracker
+Group=manager-tracker
+WorkingDirectory=/opt/manager-tracker
+Environment=PYTHONDONTWRITEBYTECODE=1
+ExecStart=/opt/manager-tracker/.venv/bin/python /opt/manager-tracker/server_tools.py backup --config /etc/manager-tracker/server-owner.json --backup-dir /var/backups/manager-tracker
+UMask=0077
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/lib/manager-tracker /var/backups/manager-tracker
+MemoryMax=128M

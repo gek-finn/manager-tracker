@@ -1,0 +1,9 @@
+{% extends 'base.html' %}{% block title %}Отправка КП{% endblock %}{% block crumb %}Заявка #{{ ticket.id }} / Отправка КП{% endblock %}
+{% block content %}<div class="heading"><div><h1>{{ 'Отметить повторную отправку КП' if mode=='repeat' else 'Отметить отправку КП' }}</h1><p class="muted">Заявка #{{ ticket.id }} · {{ ticket.client }}</p></div></div>
+{% if errors %}<div class="error-box" role="alert"><ul>{% for error in errors.values() %}<li>{{ error }}</li>{% endfor %}</ul></div>{% endif %}
+<form method="post" class="panel form-panel" data-save-form><input type="hidden" name="csrf_token" value="{{ session.csrf_token }}"><input type="hidden" name="submission_key" value="{{ submission_key }}">
+<p>Приложение не отправляет письма или документы. Здесь фиксируется уже состоявшаяся отправка коммерческого предложения.</p>
+<p class="muted">Будет создана одна задача «Связаться после отправки КП» на ответственного заявки через {{ interval }} календарных часов. Предыдущие открытые автоматические задачи повторного контакта, если они есть, будут отменены. Обычные и выполненные задачи не меняются.</p>
+<label for="proposal-comment">Комментарий о предложении *<textarea id="proposal-comment" name="comment" required maxlength="2000" rows="5">{{ comment }}</textarea></label>
+<label class="confirmation"><input type="checkbox" name="confirmed" value="1" required {% if confirmed %}checked{% endif %}>Подтверждаю, что коммерческое предложение уже отправлено клиенту</label>
+<div class="form-actions"><button class="button" type="submit">Подтвердить отправку КП</button><a class="button secondary" href="{{ url_for('detail',ticket_id=ticket.id) }}">Отмена</a></div></form>{% endblock %}

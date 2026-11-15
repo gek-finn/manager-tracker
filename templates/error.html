@@ -1,0 +1,1 @@
+{% extends 'base.html' %}{% block content %}<section class="panel confirm"><p class="eyebrow">ОШИБКА {{ code }}</p><h1>Не удалось выполнить действие</h1><p>{{ message }}</p><a class="button secondary" href="{{ url_for('index') }}">К списку заявок</a></section>{% endblock %}

@@ -31,16 +31,17 @@ Python · Flask · SQLite · Jinja2 · HTML / CSS · JavaScript
 
 ## Интерфейс
 
-![Интерфейс приложения на демонстрационных данных](docs/screenshots/desktop.png)
+### Панель руководителя
 
-<details>
-<summary>Мобильный экран и другие разделы</summary>
+![Панель руководителя](docs/screenshots/desktop.png)
 
-![detail-1](docs/screenshots/detail-1.png)
+### Реестр заявок
 
-![mobile](docs/screenshots/mobile.png)
+![Реестр заявок](docs/screenshots/detail-1.png)
 
-</details>
+### Мобильный экран
+
+![Мобильный экран](docs/screenshots/mobile.png)
 
 ## Запуск
 
